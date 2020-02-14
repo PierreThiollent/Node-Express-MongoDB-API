@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 // Import du module Mongoose
 const mongoose = require('mongoose');
 
+var Thing = require('./models/Thing');
+
 // Creation d'une app express
 const app = express();
 
@@ -28,8 +30,16 @@ app.use(bodyParser.json());
 
 // Midlleware pour la méthode POST
 app.post('/api/stuff', (req, res, next) => {
-  console.log(req.body);
-  res.status(201);
+  delete req.body._id;
+  // On instancie un nouvel objet du modele Thing
+  const thing = new Thing({
+    // On décompose le contenu du body de la requete
+    ...req.body,
+  });
+  thing
+    .save()
+    .then(() => res.status(201).json({ message: 'Objet enregistré' }))
+    .catch(error => res.status(400).json({ error }));
 });
 
 // On définit une nouvelle route
