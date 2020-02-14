@@ -1,6 +1,9 @@
 // Import du module express
 var express = require('express');
 
+// Import du module body parser
+const bodyParser = require('body-parser');
+
 // Creation d'une app express
 const app = express();
 
@@ -11,6 +14,9 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
+// Transforme le corps de toutes les requetes POST en JSON
+app.use(bodyParser.json());
 
 // On définit une nouvelle route
 app.use('/api/stuff', (req, res, next) => {
