@@ -7,5 +7,8 @@
     "test": "npm test"
   },
   "author": "Pierre Thiollent",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
