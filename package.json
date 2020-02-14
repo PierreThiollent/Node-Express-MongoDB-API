@@ -1,0 +1,11 @@
+{
+  "name": "node-api",
+  "version": "1.0.0",
+  "description": "Projet d'api avec Node.js, Express.js et MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Pierre Thiollent",
+  "license": "ISC"
+}
