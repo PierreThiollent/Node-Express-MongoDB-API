@@ -4,8 +4,16 @@ var express = require('express');
 // Import du module body parser
 const bodyParser = require('body-parser');
 
+// Import du module Mongoose
+const mongoose = require('mongoose');
+
 // Creation d'une app express
 const app = express();
+
+mongoose
+  .connect('mongodb+srv://pierre_t76:pierre_t76@cluster0-bveai.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 // Middleware permettant de définir les headers et régler les soucis de CORS
 app.use((req, res, next) => {
@@ -17,6 +25,12 @@ app.use((req, res, next) => {
 
 // Transforme le corps de toutes les requetes POST en JSON
 app.use(bodyParser.json());
+
+// Midlleware pour la méthode POST
+app.post('/api/stuff', (req, res, next) => {
+  console.log(req.body);
+  res.status(201);
+});
 
 // On définit une nouvelle route
 app.use('/api/stuff', (req, res, next) => {
