@@ -4,6 +4,14 @@ var express = require('express');
 // Creation d'une app express
 const app = express();
 
+// Middleware permettant de définir les headers et régler les soucis de CORS
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
+
 // On définit une nouvelle route
 app.use('/api/stuff', (req, res, next) => {
   // On définit les données a retourner
