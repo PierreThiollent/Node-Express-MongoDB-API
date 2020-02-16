@@ -42,6 +42,12 @@ app.post('/api/stuff', (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 });
 
+app.get('/api/stuff/:id', (req, res, next) => {
+  Thing.findById(req.params.id)
+    .then(thing => res.status(200).json(thing))
+    .catch(error => res.status(400).json({ error }));
+});
+
 // Methode pour récupérer tous les produits en vente
 app.get('/api/stuff', (req, res, next) => {
   // On appelle la méthode find pour récupérer tout les objets Thing en base
