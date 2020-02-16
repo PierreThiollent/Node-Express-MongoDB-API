@@ -15,7 +15,7 @@ const app = express();
 mongoose
   .connect('mongodb+srv://pierre_t76:pierre_t76@cluster0-bveai.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+  .catch(() => console.error('Connexion à MongoDB échouée !'));
 
 // Middleware permettant de définir les headers et régler les soucis de CORS
 app.use((req, res, next) => {
@@ -51,6 +51,12 @@ app.get('/api/stuff/:id', (req, res, next) => {
 app.put('/api/stuff/:id', (req, res, next) => {
   Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
     .then(() => res.status(200).json({ message: 'Objet modifié' }))
+    .catch(error => res.status(400).json({ error }));
+});
+
+app.delete('/api/stuff/:id', (req, res, next) => {
+  Thing.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Objet supprimé' }))
     .catch(error => res.status(400).json({ error }));
 });
 
