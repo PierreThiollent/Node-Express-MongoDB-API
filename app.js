@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 // Import du module Mongoose
 const mongoose = require('mongoose');
 
-var Thing = require('./models/Thing');
+const stuffRoutes = require('./routes/stuff');
 
 // Creation d'une app express
 const app = express();
@@ -28,45 +28,7 @@ app.use((req, res, next) => {
 // Transforme le corps de toutes les requetes POST en JSON
 app.use(bodyParser.json());
 
-// Midlleware pour la méthode POST
-app.post('/api/stuff', (req, res, next) => {
-  delete req.body._id;
-  // On instancie un nouvel objet du modele Thing
-  const thing = new Thing({
-    // On décompose le contenu du body de la requete
-    ...req.body,
-  });
-  thing
-    .save()
-    .then(() => res.status(201).json({ message: 'Objet enregistré' }))
-    .catch(error => res.status(400).json({ error }));
-});
-
-app.get('/api/stuff/:id', (req, res, next) => {
-  Thing.findById(req.params.id)
-    .then(thing => res.status(200).json(thing))
-    .catch(error => res.status(400).json({ error }));
-});
-
-app.put('/api/stuff/:id', (req, res, next) => {
-  Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-    .then(() => res.status(200).json({ message: 'Objet modifié' }))
-    .catch(error => res.status(400).json({ error }));
-});
-
-app.delete('/api/stuff/:id', (req, res, next) => {
-  Thing.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: 'Objet supprimé' }))
-    .catch(error => res.status(400).json({ error }));
-});
-
-// Methode pour récupérer tous les produits en vente
-app.get('/api/stuff', (req, res, next) => {
-  // On appelle la méthode find pour récupérer tout les objets Thing en base
-  Thing.find()
-    .then(things => res.status(200).json(things))
-    .catch(error => res.status(400).json({ error }));
-});
+app.use('/api/stuff/', stuffRoutes);
 
 // Export de cette app
 module.exports = app;
