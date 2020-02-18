@@ -25,7 +25,7 @@ exports.modifyThing = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-exports.deleteOThing = (req, res, next) => {
+exports.deleteThing = (req, res, next) => {
   Thing.deleteOne({ _id: req.params.id })
     .then(() => res.status(200).json({ message: 'Objet supprimé' }))
     .catch(error => res.status(400).json({ error }));
