@@ -1,9 +1,6 @@
 // Import du module express
 var express = require('express');
 
-// Import du module body parser
-const bodyParser = require('body-parser');
-
 // Import du module Mongoose
 const mongoose = require('mongoose');
 
@@ -27,7 +24,7 @@ app.use((req, res, next) => {
 });
 
 // Transforme le corps de toutes les requetes POST en JSON
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use('/api/stuff/', stuffRoutes);
 app.use('/api/auth/', userRoutes);
