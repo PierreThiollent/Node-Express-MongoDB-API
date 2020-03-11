@@ -1,5 +1,6 @@
 // Import du module express
 var express = require('express');
+const path = require('path');
 
 // Import du module Mongoose
 const mongoose = require('mongoose');
@@ -25,6 +26,8 @@ app.use((req, res, next) => {
 
 // Transforme le corps de toutes les requetes POST en JSON
 app.use(express.json());
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/stuff/', stuffRoutes);
 app.use('/api/auth/', userRoutes);
